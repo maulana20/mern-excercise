@@ -4,6 +4,7 @@ import { LOGOUT } from '../actions/types';
 
 // Create an instance of axios
 const api = axios.create({
+  withCredentials: true,
   baseURL: '/api',
   headers: {
     'Content-Type': 'application/json'

@@ -1,12 +1,12 @@
 const express = require('express');
-const cors = require('cors');
+const cookieParser = require("cookie-parser");
 const db = require('./config/db');
 const app = express();
 
 db.connect();
 db.open();
 
-app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 app.use('/api/users', require('./routes/api/users'));
