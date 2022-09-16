@@ -65,7 +65,10 @@ router.post(
         { expiresIn: '5 days' },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.cookie("mern_token", token, {
+            httpOnly: true,
+            secure: false,
+          }).status(200).json({ msg: 'Logged in successfully' });
         }
       );
     } catch (err) {
@@ -74,5 +77,9 @@ router.post(
     }
   }
 );
+
+router.get('/logout', auth, async (req, res) => {
+  res.clearCookie("mern_token").status(200).json({ msg: "Successfully logged out" });
+});
 
 module.exports = router;
