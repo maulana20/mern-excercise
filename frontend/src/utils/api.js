@@ -20,10 +20,21 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (res) => res,
-  (err) => {
-    if (err.response.status === 401) {
-      store.dispatch({ type: LOGOUT });
+  async (err) => {
+    if (err.config.url !== "/auth" && err.response) {
+      if (err.response.status === 401 && !err.config._retry) {
+        err.config._retry = true;
+        try {
+          const currentState = store.getState();
+          await api.get("/auth/refresh/" + currentState.auth.user._id);
+          return api(err.config);
+        } catch (error) {
+          store.dispatch({ type: LOGOUT });
+          return Promise.reject(error);
+        }
+      }
     }
+    
     return Promise.reject(err);
   }
 );
