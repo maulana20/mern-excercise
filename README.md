@@ -18,3 +18,5 @@ open browser menggunakan https dengan domain https://mern-excercise.local
 ### reference
 - [MERN Stack](https://github.com/bradtraversy/devconnector_2.0)
 - [local ssl](https://hackerrdave.com/https-local-docker-nginx/)
+- [refresh token fe](https://www.bezkoder.com/react-refresh-token/)
+- [refresh token be](https://medium.com/@had096705/build-authentication-with-refresh-token-using-nodejs-and-express-2b7aea567a3a)
