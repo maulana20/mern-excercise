@@ -2,7 +2,7 @@ const amqp = require('amqplib');
 
 const connect = async () => {
   try {
-    const connection = await amqp.connect("amqp://user:password@rabbitmq:5672");
+    const connection = await amqp.connect(`amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`);
     const channel = await connection.createChannel();
     console.log("RabbitMQ Connected...");
     return channel;
