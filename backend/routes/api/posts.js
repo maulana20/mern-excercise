@@ -7,6 +7,8 @@ const Post = require('../../models/Post');
 const User = require('../../models/User');
 const checkObjectId = require('../../middleware/checkObjectId');
 
+const messageBroker = require('../../config/messageBroker');
+
 // @route    POST api/posts
 // @desc     Create a post
 // @access   Private
@@ -103,6 +105,7 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
 // @access   Private
 router.put('/like/:id', auth, checkObjectId('id'), async (req, res) => {
   try {
+    const user = await User.findById(req.user.id).select('-password');
     const post = await Post.findById(req.params.id);
 
     // Check if the post has already been liked
@@ -113,6 +116,14 @@ router.put('/like/:id', auth, checkObjectId('id'), async (req, res) => {
     post.likes.unshift({ user: req.user.id });
 
     await post.save();
+    
+    messageBroker.connect().then(channel => {
+      channel.assertQueue('notification', { durable: false });
+      channel.sendToQueue('notification', Buffer.from(JSON.stringify({
+        message: `${user.name} has like your post`,
+        link: req.get('origin') + "/posts/" + req.params.id
+      })));
+    });
 
     return res.json(post.likes);
   } catch (err) {
@@ -175,6 +186,14 @@ router.post(
       post.comments.unshift(newComment);
 
       await post.save();
+      
+      messageBroker.connect().then(channel => {
+        channel.assertQueue('notification', { durable: false });
+        channel.sendToQueue('notification', Buffer.from(JSON.stringify({
+          message: `${user.name} has comment your post`,
+          link: req.get('origin') + "/posts/" + req.params.id
+        })));
+      });
 
       res.json(post.comments);
     } catch (err) {

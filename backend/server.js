@@ -1,10 +1,14 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
 const db = require('./config/db');
+const messageBroker = require('./config/messageBroker');
 const app = express();
 
 db.connect();
 db.open();
+
+messageBroker.connect();
+messageBroker.consume();
 
 app.use(cookieParser());
 app.use(express.json());
