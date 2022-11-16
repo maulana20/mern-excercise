@@ -7,8 +7,15 @@ const app = express();
 db.connect();
 db.open();
 
+const cors = require('cors');
+app.use(cors());
+
+const server = app.listen(8080, () => console.log("WebSocket Connected..."));
+const io = require('socket.io')(server, {cors: {origin: "*"}});
+const socket = io.of('/');
+
 messageBroker.connect();
-messageBroker.consume();
+messageBroker.consume(socket);
 
 app.use(cookieParser());
 app.use(express.json());
