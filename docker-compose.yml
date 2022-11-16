@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
     depends_on:
       - mongo
-    env_file: ./backend/.env
+    env_file: ./environment/.env
     networks:
       - app-network
   frontend:
@@ -42,6 +42,22 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
+    networks:
+      - app-network
+  rabbitmq:
+    image: rabbitmq:3-management
+    volumes:
+      - ~/.docker-conf/rabbitmq/data:/var/lib/rabbitmq
+      - ~/.docker-conf/rabbitmq/log:/var/log/rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - backend
+      - frontend
+    env_file: ./environment/.env
     networks:
       - app-network
   proxy:
@@ -62,5 +78,6 @@ services:
       - mongo
       - backend
       - frontend
+      - rabbitmq
     networks:
       - app-network

@@ -50,8 +50,8 @@ router.post(
           id: user.id
         }
       };
-      const token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '10000' });
-      const refreshToken = jwt.sign(payload, config.get('jwtRefreshSecret'), { expiresIn: '15000' });
+      const token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '1m' });
+      const refreshToken = jwt.sign(payload, config.get('jwtRefreshSecret'), { expiresIn: '5m' });
       
       res.cookie("mern_token", token);
       res.cookie("mern_refresh_token", refreshToken);
@@ -82,8 +82,8 @@ router.get("/refresh/:id",
           id: req.params.id
         }
       };
-      const token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '10000' });
-      const refreshToken = jwt.sign(payload, config.get('jwtRefreshSecret'), { expiresIn: '15000' });
+      const token = jwt.sign(payload, config.get('jwtSecret'), { expiresIn: '1m' });
+      const refreshToken = jwt.sign(payload, config.get('jwtRefreshSecret'), { expiresIn: '5m' });
       
       res.cookie("mern_token", token);
       res.cookie("mern_refresh_token", refreshToken);

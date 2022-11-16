@@ -88,7 +88,7 @@ const ProfileForm = ({
         {creatingProfile ? 'Create Your Profile' : 'Edit Your Profile'}
       </h1>
       <p className="lead">
-        <i className="fas fa-user" />
+        <i className="fa fa-user" />
         {creatingProfile
           ? ` Let's get some information to make your`
           : ' Add some changes to your profile'}
