@@ -12,11 +12,14 @@ const connect = async () => {
   }
 };
 
-const consume = async () => {
+const consume = async (socket) => {
   try {
     connect().then(channel => {
       channel.assertQueue('notification', { durable: false });
-      channel.consume('notification', msg => console.log('- Received', msg.content.toString()), { noAck: true });
+      channel.consume('notification', msg => {
+        console.log('- Received', msg.content.toString());
+        socket.emit('notification', msg.content.toString());
+      }, { noAck: true });
     });
     console.log("RabbitMQ Consume...");
   } catch (err) {

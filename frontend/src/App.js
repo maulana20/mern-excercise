@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import io from 'socket.io-client';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
@@ -15,6 +16,7 @@ import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import NotFound from './components/layout/NotFound';
 import PrivateRoute from './components/routing/PrivateRoute';
+import { setAlert } from './actions/alert';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -24,9 +26,14 @@ import { loadUser } from './actions/auth';
 import './App.css';
 
 const App = () => {
+  const socket = io("http://localhost:8080");
   useEffect(() => {
     // will get a 401 response from our API
     store.dispatch(loadUser());
+    socket.on("notification", (response) => {
+      const result = JSON.parse(response);
+      store.dispatch(setAlert(result.message, "success"));
+    });
   }, []);
 
   return (
