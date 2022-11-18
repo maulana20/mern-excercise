@@ -16,8 +16,8 @@ production
 open browser menggunakan https dengan domain https://mern-excercise.local
 
 message broker http://localhost:15672
-`$ user : user`
-`$ pass : password`
+- `$ user : user`
+- `$ pass : password`
 
 websocket http://localhost:8080
 
