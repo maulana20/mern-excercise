@@ -29,11 +29,11 @@ services:
       - ./backend/:/app
       - /app/node_modules
     ports:
-      - 8080:8080
+      - ${WEBSOCKET_PORT}:${WEBSOCKET_PORT}
     restart: unless-stopped
     depends_on:
       - mongo
-    env_file: ./environment/.env
+    env_file: ./.env
     networks:
       - app-network
   frontend:
@@ -52,14 +52,18 @@ services:
       - ~/.docker-conf/rabbitmq/data:/var/lib/rabbitmq
       - ~/.docker-conf/rabbitmq/log:/var/log/rabbitmq
     ports:
-      - 5672:5672
-      - 15672:15672
+      - ${RABBITMQ_DEFAULT_PORT}:${RABBITMQ_DEFAULT_PORT}
+      - ${RABBITMQ_DEFAULT_PORT_WEB}:${RABBITMQ_DEFAULT_PORT_WEB}
     restart: unless-stopped
     depends_on:
       - mongo
       - backend
       - frontend
-    env_file: ./environment/.env
+    environment:
+      - RABBITMQ_DEFAULT_HOST=${RABBITMQ_DEFAULT_HOST}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - app-network
   proxy:
@@ -72,9 +76,9 @@ services:
       - ./proxy/cert/:/etc/nginx/cert
       - ./proxy/conf.d/mern-excercise.local.conf:/etc/nginx/conf.d/mern-excercise.local.conf
     ports:
-      - 443:443
+      - ${PROXY_SSL}:${PROXY_SSL}
     expose:
-      - "443"
+      - ${PROXY_SSL}
     restart: unless-stopped
     depends_on:
       - mongo
