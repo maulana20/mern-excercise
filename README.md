@@ -26,3 +26,5 @@ websocket http://localhost:8080
 - [local ssl](https://hackerrdave.com/https-local-docker-nginx/)
 - [refresh token fe](https://www.bezkoder.com/react-refresh-token/)
 - [refresh token be](https://medium.com/@had096705/build-authentication-with-refresh-token-using-nodejs-and-express-2b7aea567a3a)
+- [runtime env fe](https://blog.risingstack.com/create-react-app-runtime-env-cra/)
+- [encrypt crypto](https://www.code-sample.com/2019/12/react-encryption-decryption-data-text.html)
