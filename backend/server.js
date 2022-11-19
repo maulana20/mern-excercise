@@ -10,7 +10,7 @@ db.open();
 const cors = require('cors');
 app.use(cors());
 
-const server = app.listen(8080, () => console.log("WebSocket Connected..."));
+const server = app.listen(process.env.WEBSOCKET_PORT, () => console.log("WebSocket Connected..."));
 const io = require('socket.io')(server, {cors: {origin: "*"}});
 const socket = io.of('/');
 

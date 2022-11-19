@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import io from 'socket.io-client';
+import cryptoJS from 'crypto-js';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
@@ -31,7 +32,10 @@ const App = () => {
     // will get a 401 response from our API
     store.dispatch(loadUser());
     socket.on("notification", (response) => {
-      const result = JSON.parse(response);
+      console.log('- Received', response);
+      const bytes = cryptoJS.AES.decrypt(response, window.__RUNTIME_CONFIG__.CRYPTO_KEY);
+      const result = JSON.parse(bytes.toString(cryptoJS.enc.Utf8));
+      console.log('- Decrypt', result);
       store.dispatch(setAlert(result.message, "success"));
     });
   }, []);

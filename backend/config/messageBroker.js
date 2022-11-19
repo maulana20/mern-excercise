@@ -1,4 +1,5 @@
 const amqp = require('amqplib');
+const cryptoJS = require("crypto-js");
 
 const connect = async () => {
   try {
@@ -18,7 +19,9 @@ const consume = async (socket) => {
       channel.assertQueue('notification', { durable: false });
       channel.consume('notification', msg => {
         console.log('- Received', msg.content.toString());
-        socket.emit('notification', msg.content.toString());
+        const cipherText = cryptoJS.AES.encrypt(msg.content.toString(), process.env.CRYPTO_KEY).toString();
+        console.log('- Encrypt', cipherText);
+        socket.emit('notification', cipherText);
       }, { noAck: true });
     });
     console.log("RabbitMQ Consume...");
