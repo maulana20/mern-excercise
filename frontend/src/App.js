@@ -26,7 +26,7 @@ import { loadUser } from './actions/auth';
 import './App.css';
 
 const App = () => {
-  const socket = io("http://localhost:8080");
+  const socket = io(`http://localhost:${window.__RUNTIME_CONFIG__.WEBSOCKET_PORT}`);
   useEffect(() => {
     // will get a 401 response from our API
     store.dispatch(loadUser());

@@ -8,3 +8,6 @@
 
 # production
 /frontend/build
+
+# frontend runtime environment
+/frontend/public/runtime-env.js
