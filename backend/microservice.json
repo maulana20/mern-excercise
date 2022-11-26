@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "aqi-challenge",
+  "private_key_id": "14483baf100825002aa1ba78e024d25687dcc7db",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDEPFWRrfNQDszB\noqD7fg4KP30kJtW1rZs9ibhUHXJA+2PXuGLOSLnwPUQbkNYTkQB6gLWZuFARGRDP\njczp0f8cegTfD0wS9QYw4V7hNl7aWcxXzXGh7AwR6o+s0dt+r5gtLzYRX61ocL+c\nh8D6h6gr+XqVu5bzdhlXDmek4ATCxUV4vFXw/N9jj0YMYjLbfN3DWf7PivtzNlwH\njRvWAA/hsDcJBqgqp/z6yrVnpyLDbZDasLGiJXpUKwcmXwrCIJRP1BFkujRRCv+u\noMUxQc8NJE07wsUcfIEx61KTMNjbRoJWQLbHkP3oHXxQov9yFbJDIhAh10iL+EsP\n6/uM/X6hAgMBAAECggEAJOKMWPYf4l/tx8XISY1PmUiGvqlYCS6pG9+LmK/yPlmi\nUjVzyP9th8UUTLQkMQhT1TLlL5Av6I7UFJc8OYUB1TnwOXc4HuYUdFKgUWe1W4h+\netCAd+WU/TcgK2VEwyLBUVjq6kgYIaXztjnkIZMnHqDllEhu3rNHnw/zlk+PRYaX\nusJPNiOeoP/p4GsSvjSmqUGmlTfSR60I/whCARxMVt94Z+x9p32NpGnkqdbHMyoy\nNXhLxEJ8gRPfSBwXPdqR+gSqJZYJwqCIlSwIx7K+X84u/L8F7B2yv3rfH20jOd9M\nknoSXrgywIovWSk395/ylNmKhTY8i2xO47LqMoZB+QKBgQDkV6pULxIIoxQ5Fl8x\nXrXTA1sDjN/pmQXGHj9BipYLeHIKniSJSe5VQgnHqcO8LQ1pSClbDy57ejLDcDdE\n3rEr9sKcCc7TmLfLmHCppr9oPAN1WlBM5JBcSBhPhl5+LsOJkzSjPJfjOE5z0EyN\n0x6s63BspSDswodlYjpgCLVEZQKBgQDcAR4aOqRcxVplCZwnUJZaZeE/AvwLvhYY\nffiy39TDhDtfYGaqPZrdPut89FEgqHKPN8j48NSrQWncR/khpsGiVmpj90xb6n8X\nFNr/NfADcqyNi7jik5k/pTih7kcKYiTCQYrua6ygxAKIX+gHGNILvLYhU2c8sa4d\nHRkyP37XjQKBgHJgAv5V8YeIACo0LYxyL0s6BA28M7AzqPO61N6Eh3HJa/4rhouK\nD6p/AJ0VSOjp/Cy/K4/kA9lvtRu2Cskhbsdhu8sjEolklrORcOVZk8inPug6S7yo\nRDMlHaA/4vb7f5BavuQBBueWnZ1fOelUVaox6EdTUzGkouNCl5Dg68MNAoGAbjxJ\nHw9fJ/TjNFk6WyCwFZ+S24XdUOzwGVmVcdthuo3ZShL9njO8EzvhtvycYebFcCmd\nk87oYN8n8e5GUKxDvdna+TgClNPM1n3mtZYLK08cUtg9zZnzYcaht9Gy2usOTB+X\nQ5vEJdHRCxAzLMstBCCMiepGgkztVz0rUNgr8EkCgYB1QMBRfm6uCHYgAPdaDMyP\nZxhd/GdocFHe4992qQep7TRdDSFo+yWzD9a+GFNfnr/H0W08DpFSia5ebqZ8Pozj\nmEuK7P0rK4wrzovpN9KGi47i3x7u2ENG/CfFJvrlWpkG1GmBGw38cSUt1nMVurpK\nPPHZlv+xjY3vKxYSarTB4w==\n-----END PRIVATE KEY-----\n",
+  "client_email": "asiaquest@aqi-challenge.iam.gserviceaccount.com",
+  "client_id": "118361740632920560321",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/asiaquest%40aqi-challenge.iam.gserviceaccount.com"
+}
+

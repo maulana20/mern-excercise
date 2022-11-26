@@ -51,26 +51,6 @@ services:
       - backend
     networks:
       - app-network
-  rabbitmq:
-    image: rabbitmq:3-management
-    volumes:
-      - ~/.docker-conf/rabbitmq/data:/var/lib/rabbitmq
-      - ~/.docker-conf/rabbitmq/log:/var/log/rabbitmq
-    ports:
-      - ${RABBITMQ_DEFAULT_PORT}:${RABBITMQ_DEFAULT_PORT}
-      - ${RABBITMQ_DEFAULT_PORT_WEB}:${RABBITMQ_DEFAULT_PORT_WEB}
-    restart: unless-stopped
-    depends_on:
-      - mongo
-      - backend
-      - frontend
-    environment:
-      - RABBITMQ_DEFAULT_HOST=${RABBITMQ_DEFAULT_HOST}
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
-    networks:
-      - app-network
   proxy:
     image: nginx:1.21.0-alpine
     logging:
@@ -89,6 +69,5 @@ services:
       - mongo
       - backend
       - frontend
-      - rabbitmq
     networks:
       - app-network

@@ -117,13 +117,10 @@ router.put('/like/:id', auth, checkObjectId('id'), async (req, res) => {
 
     await post.save();
     
-    messageBroker.connect().then(channel => {
-      channel.assertQueue('notification', { durable: false });
-      channel.sendToQueue('notification', Buffer.from(JSON.stringify({
-        message: `${user.name} has like your post`,
-        link: req.get('origin') + "/posts/" + req.params.id
-      })));
-    });
+    messageBroker.publisher(Buffer.from(JSON.stringify({
+      author: user.name,
+      content: `${user.name} has like your post`
+    })));
 
     return res.json(post.likes);
   } catch (err) {
@@ -187,13 +184,10 @@ router.post(
 
       await post.save();
       
-      messageBroker.connect().then(channel => {
-        channel.assertQueue('notification', { durable: false });
-        channel.sendToQueue('notification', Buffer.from(JSON.stringify({
-          message: `${user.name} has comment your post`,
-          link: req.get('origin') + "/posts/" + req.params.id
-        })));
-      });
+      messageBroker.publisher(Buffer.from(JSON.stringify({
+        author: user.name,
+        content: `${user.name} has comment your post`
+      })));
 
       res.json(post.comments);
     } catch (err) {

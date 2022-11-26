@@ -15,10 +15,6 @@ production
 
 open browser menggunakan https dengan domain https://mern-excercise.local
 
-message broker http://localhost:15672
-- `$ user : user`
-- `$ pass : password`
-
 websocket http://localhost:8080
 
 ### reference
@@ -27,4 +23,6 @@ websocket http://localhost:8080
 - [refresh token fe](https://www.bezkoder.com/react-refresh-token/)
 - [refresh token be](https://medium.com/@had096705/build-authentication-with-refresh-token-using-nodejs-and-express-2b7aea567a3a)
 - [runtime env fe](https://blog.risingstack.com/create-react-app-runtime-env-cra/)
-- [encrypt crypto](https://www.code-sample.com/2019/12/react-encryption-decryption-data-text.html)
+
+flow google pub sub
+![flow](./flow.png)

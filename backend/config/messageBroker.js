@@ -1,37 +1,44 @@
-const amqp = require('amqplib');
-const cryptoJS = require("crypto-js");
+const { PubSub } = require('@google-cloud/pubsub');
+const pubsub = new PubSub();
 
-const connect = async () => {
+const publisher = async (data) => {
   try {
-    const connection = await amqp.connect(`amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`);
-    const channel = await connection.createChannel();
-    console.log("RabbitMQ Connected...");
-    return channel;
+    pubsub.topic(process.env.GOOGLE_PUBLISHER_MESSAGE, { key: process.env.GOOGLE_PUBLISHER_KEY }).publish(data);
   } catch (err) {
     console.error(err.message);
     process.exit(1);
   }
 };
 
-const consume = async (socket) => {
+const subscriber = async (socket) => {
   try {
-    connect().then(channel => {
-      channel.assertQueue('notification', { durable: false });
-      channel.consume('notification', msg => {
-        console.log('- Received', msg.content.toString());
-        const cipherText = cryptoJS.AES.encrypt(msg.content.toString(), process.env.CRYPTO_KEY).toString();
-        console.log('- Encrypt', cipherText);
-        socket.emit('notification', cipherText);
-      }, { noAck: true });
+    pubsub.subscription(process.env.GOOGLE_SUBCRIBER_MESSAGE).on("message", (message) => {
+      if (isJson(message.data)) {
+        if (!JSON.parse(message.data).message) return false;
+        pubsub.subscription(process.env.GOOGLE_SUBCRIBER_KEY).on("message", (msg) => {
+          socket.emit('notification', JSON.stringify({
+            message: JSON.parse(message.data).message,
+            key: JSON.parse(msg.data).key
+          }));
+        });
+      }
     });
-    console.log("RabbitMQ Consume...");
   } catch (err) {
     console.error(err.message);
     process.exit(1);
   }
 };
+
+const isJson = (str) => {
+  try {
+   JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 
 module.exports = {
-  connect: connect,
-  consume: consume
+  publisher: publisher,
+  subscriber: subscriber
 }
