@@ -34,11 +34,17 @@ const App = () => {
     // will get a 401 response from our API
     store.dispatch(loadUser());
     socket.on("notification", (notification) => {
-      sendDecrypt(JSON.parse(notification));
+      notification = JSON.parse(notification);
+      if (notification.content) {
+        store.dispatch(setAlert(notification.content, "success"));
+        store.dispatch({ type: ADD_NOTIFICATION, payload: notification });
+      } else {
+        apiDecrypt(notification);
+      }
     });
   }, []);
   
-  const sendDecrypt = async (data) => {
+  const apiDecrypt = async (data) => {
     if (!data.message) return false;
     await axios.post(
       `https://challenges.aqi.co.id/api/microservices/decrypt/${data.key}`,

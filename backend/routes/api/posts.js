@@ -186,7 +186,7 @@ router.post(
       
       messageBroker.publisher(Buffer.from(JSON.stringify({
         author: user.name,
-        content: `${user.name} has comment your post`
+        content: `${user.name} has comment ${newComment.text} your post`
       })));
 
       res.json(post.comments);
