@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import io from 'socket.io-client';
-import cryptoJS from 'crypto-js';
+import axios from 'axios';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
@@ -15,9 +15,11 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import Notifications from './components/notifications/Notifications';
 import NotFound from './components/layout/NotFound';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { setAlert } from './actions/alert';
+import { ADD_NOTIFICATION } from './actions/types';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -31,14 +33,32 @@ const App = () => {
   useEffect(() => {
     // will get a 401 response from our API
     store.dispatch(loadUser());
-    socket.on("notification", (response) => {
-      console.log('- Received', response);
-      const bytes = cryptoJS.AES.decrypt(response, window.__RUNTIME_CONFIG__.CRYPTO_KEY);
-      const result = JSON.parse(bytes.toString(cryptoJS.enc.Utf8));
-      console.log('- Decrypt', result);
-      store.dispatch(setAlert(result.message, "success"));
+    socket.on("notification", (notification) => {
+      notification = JSON.parse(notification);
+      if (notification.content) {
+        store.dispatch(setAlert(notification.content, "success"));
+        store.dispatch({ type: ADD_NOTIFICATION, payload: notification });
+      } else {
+        apiDecrypt(notification);
+      }
     });
   }, []);
+  
+  const apiDecrypt = async (data) => {
+    if (!data.message) return false;
+    await axios.post(
+      `https://challenges.aqi.co.id/api/microservices/decrypt/${data.key}`,
+      { message: data.message },
+      { headers : { Authorization: `Bearer ${window.__RUNTIME_CONFIG__.AQI_TOKEN}` } }
+    ).then(response => {
+      var notification = {};
+      if (response.data.result) {
+        notification = response.data.result;
+        store.dispatch(setAlert(response.data.result.content, "success"));
+      }
+      store.dispatch({ type: ADD_NOTIFICATION, payload: notification });
+    });
+  }
 
   return (
     <Provider store={store}>
@@ -73,6 +93,7 @@ const App = () => {
           />
           <Route path="posts" element={<PrivateRoute component={Posts} />} />
           <Route path="posts/:id" element={<PrivateRoute component={Post} />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>

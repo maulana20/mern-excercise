@@ -14,8 +14,7 @@ const server = app.listen(process.env.WEBSOCKET_PORT, () => console.log("WebSock
 const io = require('socket.io')(server, {cors: {origin: "*"}});
 const socket = io.of('/');
 
-messageBroker.connect();
-messageBroker.consume(socket);
+messageBroker.subscriber(socket);
 
 app.use(cookieParser());
 app.use(express.json());

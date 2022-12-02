@@ -11,3 +11,7 @@
 
 # frontend runtime environment
 /frontend/public/runtime-env.js
+
+/.env
+/frontend/.env
+/backend/microservice.json
